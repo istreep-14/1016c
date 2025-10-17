@@ -1,0 +1,96 @@
+@media (max-height: 600px) or (max-width: 799.3px) {
+
+  body.lichessTools .lichessTools-dailyQuote.top {
+    display: none;
+  }
+
+}
+
+@media (min-height: 600px) and (min-width: 799.3px) {
+  body.lichessTools:has(.lichessTools-dailyQuote.top) #main-wrap {
+    margin-top: 0;
+  }
+}
+
+body.lichessTools .lichessTools-dailyQuote {
+  position: relative;
+  background: #80808020;
+  padding: 0.5em;
+  padding-right:1.5em;
+  height: fit-content;
+}
+
+body.lichessTools .lichessTools-dailyQuote.top {
+  margin-top: calc(var(---site-header-height) + var(---site-header-margin) + var(---sticky-gap));
+}
+
+@media (prefers-reduced-motion) {
+  body.lichessTools .lichessTools-dailyQuote.top {
+    background: #80808010;
+    margin-top: 0;
+  }
+}
+
+body.lichessTools .lichessTools-dailyQuote button.close {
+  position: absolute;
+  top: 0;
+  right: 0em;
+
+  margin-inline-start: -1.75em;
+  width: 1.75em;
+  height: 1.75em;
+  background-color: var(--c-bg-popup);
+  border-radius: 50%;
+  border: none;
+}
+
+body.lichessTools .lichessTools-dailyQuote button.close:hover {
+  background-color: #80808040;
+}
+
+body.lichessTools .lichessTools-dailyQuote button.close:after {
+  content: '\E02A'; /* X */
+
+  vertical-align: middle;
+  font-family: "lichess";
+  font-style: normal;
+  font-weight: normal;
+  text-transform: none;
+  speak: none;
+  opacity: .9;
+  unicode-bidi: isolate;
+}
+
+body.lichessTools .lichessTools-dailyQuote .quote {
+  font-style: italic;
+}
+
+body.lichessTools .lichessTools-dailyQuote .author {
+  margin-left: 2em;
+  font-size: small;
+  white-space: nowrap;
+}
+
+body.lichessTools div.lichessTools-dailyQuote .author {
+  text-decoration: underline;
+  cursor: pointer;
+  color: var(--c-link);
+}
+
+body.lichessTools dialog.lichessTools-dailyQuote {
+  min-width: 20em;
+  max-width: min(80vw, 30em);
+}
+
+body.lichessTools dialog.lichessTools-dailyQuote .dialog-header {
+  text-align: center;
+  font-size: 1.25em;
+}
+
+body.lichessTools dialog.lichessTools-dailyQuote .dialog-content > div {
+  padding: 0.25em;
+}
+
+body.lichessTools dialog.lichessTools-dailyQuote .dialog-content > div:nth-child(even) {
+  background: var(--c-bg-zebra2);
+}

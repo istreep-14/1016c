@@ -1,0 +1,72 @@
+
+body.lichessTools .lobby__side:has(.lichessTools-pins) .lobby__timeline,
+body.lichessTools .lobby__side:has(.lichessTools-pins) .lobby__feed {
+  order: 2;
+}
+
+
+body.lichessTools .lobby__side .lichessTools-pins {
+  order: 1;
+  flex: 0 0 auto;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+body.lichessTools span.lichessTools-pin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body.lichessTools span.lichessTools-pin.lichessTools-pinned {
+  align-items: end;
+}
+
+body.lichessTools span.lichessTools-pin.lichessTools-pinned:before {
+  transform-origin: center;
+  transform: rotate(320deg) translate(-0.5em, 0.5em);
+}
+
+body.lichessTools .relay-tour__side__header span.lichessTools-pin {
+  background: var(--c-bg-zebra);
+}
+
+body.lichessTools .relay-tour__side__header span.lichessTools-pin.lichessTools-pinned:before {
+  transform: rotate(320deg) translate(-0.5em, 0.1em);
+}
+
+
+body.lichessTools a.lichessTools-pin {
+  display: flex;
+}
+
+body.lichessTools a.lichessTools-pin span.content {
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+body.lichessTools a.lichessTools-pin span.name {
+  white-space: break-spaces;
+}
+
+body.lichessTools a.lichessTools-pin i.img:before {
+  filter: grayscale(1);
+  font-size: 2em;
+}
+
+body.lichessTools a.lichessTools-pin:hover span.lichessTools-unpin {
+  color: initial;
+}
+
+body.lichessTools a.lichessTools-pin:hover span.lichessTools-unpin:hover {
+  color: red;
+}
+
+/* Prettier Lichess */
+
+body.lichessTools.lichessTools-prettier span.lichessTools-pin.lichessTools-pinned:before {
+  transform: rotate(320deg) translate(-0.76em, 0.5em);
+}

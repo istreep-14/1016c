@@ -1,0 +1,34 @@
+body.lichessTools header.lichessTools-fullScreen {
+  visibility: hidden;
+}
+
+body.lichessTools.lichessTools-fullScreen-enabled.zenable.zen header#top:not(.lichessTools-fullScreen) {
+  width: 100%;
+  justify-content: end;
+}
+
+body.lichessTools.lichessTools-fullScreen-enabled.zenable.zen header:not(.lichessTools-fullScreen) div.site-buttons {
+  visibility: hidden;
+  display: flex;
+}
+
+body.lichessTools.zenable.zen header:not(.lichessTools-fullScreen) div.lichessTools-fullScreen {
+  visibility: visible;
+}
+
+body.lichessTools.zenable.zen:has(header.lichessTools-fullScreen) #zenzone {
+  display: none;
+}
+
+body.lichessTools div.lichessTools-fullScreen button {
+  font-size: 1.3em;
+  margin-bottom: 0.5em;
+  background: none;
+  border: none;
+}
+
+@media (max-width: 1019.29px) {
+  body.lichessTools div.lichessTools-fullScreen button {
+    display: none;
+  }
+}
