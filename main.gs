@@ -1,4 +1,4 @@
-javascript:(function(){
+javascript:(async function(){
   console.log('🎯 Lichess Complete Analyzer (treeParts + DOM)');
   
   // First, try to get data from page-init-data script tag
@@ -76,6 +76,44 @@ javascript:(function(){
   // Get DOM moves for cross-reference
   const moveElements = document.querySelectorAll('move.mainline');
   console.log(`Found ${moveElements.length} moves in DOM`);
+
+  // Try to leverage lichessTools or Lichess API for enriched metadata
+  let apiData = null;
+  try {
+    if (window.lichessTools?.api?.game?.getPgns) {
+      const out = await window.lichessTools.api.game.getPgns([gameId], {
+        ndjson: true,
+        pgnInJson: true,
+        division: true,
+        clocks: true,
+        evals: true,
+        opening: true,
+        accuracy: true,
+        literate: true
+      });
+      apiData = Array.isArray(out) ? out[0] : null;
+    }
+  } catch (e) {
+    console.log('⚠️ lichessTools.getPgns failed:', e);
+  }
+  // Fallback to direct API if lichessTools not available
+  if (!apiData) {
+    try {
+      const params = new URLSearchParams({
+        ndjson: 'true', pgnInJson: 'true', division: 'true', clocks: 'true', evals: 'true', opening: 'true', accuracy: 'true', literate: 'true'
+      });
+      const res = await fetch(`/api/games/export/_ids?${params.toString()}` , {
+        method: 'POST',
+        headers: { 'Accept': 'application/x-ndjson' },
+        body: gameId
+      });
+      const text = await res.text();
+      const line = (text || '').split(/\r?\n/).find(l => l.trim());
+      apiData = line ? JSON.parse(line) : null;
+    } catch (e) {
+      console.log('⚠️ Direct API fetch failed:', e);
+    }
+  }
   
   // Initialize move stats
   const moveStats = {
@@ -119,9 +157,19 @@ javascript:(function(){
   };
   
   const players = getPlayerInfo();
+  // Fallback to API player info if DOM summary missing
+  try {
+    if (apiData?.players) {
+      const ap = apiData.players;
+      if (!players.white.name && ap.white?.user?.name) players.white.name = ap.white.user.name;
+      if (!players.white.rating && ap.white?.rating) players.white.rating = ap.white.rating;
+      if (!players.black.name && ap.black?.user?.name) players.black.name = ap.black.user.name;
+      if (!players.black.rating && ap.black?.rating) players.black.rating = ap.black.rating;
+    }
+  } catch (_) {}
   
   // Get game phases
-  const division = gameData?.division || { middle: null, end: null };
+  const division = (apiData?.division) || (gameData?.division) || { middle: null, end: null };
   
   // Helper to format eval
   function formatEval(evalObj) {
@@ -217,12 +265,15 @@ javascript:(function(){
   
   const moves = [];
   
-  // Track clocks for each side
+  // Track clocks for each side (prefer API clock configuration)
+  const initialSec = (apiData?.clock?.initial ?? gameData?.clock?.initial ?? 120);
+  const incrementSec = (apiData?.clock?.increment ?? gameData?.clock?.increment ?? 0);
   const clockTracker = {
-    white: gameData?.clock?.initial * 100 || 12000, // in centiseconds
-    black: gameData?.clock?.initial * 100 || 12000
+    white: (initialSec * 100) || 12000, // in centiseconds
+    black: (initialSec * 100) || 12000
   };
-  const increment = (gameData?.clock?.increment || 0) * 100; // in centiseconds
+  const increment = (incrementSec || 0) * 100; // in centiseconds
+  const apiClocks = Array.isArray(apiData?.clocks) ? apiData.clocks : [];
   
   // Process moves combining treeParts and DOM
   for (let i = 1; i < Math.max(treeParts.length, moveElements.length + 1); i++) {
@@ -250,8 +301,10 @@ javascript:(function(){
     const opening = treePart?.opening ? `${treePart.opening.eco} ${treePart.opening.name}` : '';
     const eco = treePart?.opening?.eco || '';
     
-    // Clock and time calculation
-    const clockCentis = treePart?.clock;
+    // Clock and time calculation (fallback to API clocks if missing)
+    const clockCentis = (treePart?.clock !== undefined && treePart?.clock !== null)
+      ? treePart.clock
+      : (apiClocks[ply - 1] !== undefined ? apiClocks[ply - 1] : undefined);
     const clockTime = clockCentis ? (clockCentis / 100).toFixed(2) + 's' : '';
     
     let moveTime = '';
