@@ -1,0 +1,5 @@
+/* No Practice button */
+
+body.lichessTools.lichessTools-theme_noPractice button[data-mode="practice"]:not(.active) {
+  display:none;
+}

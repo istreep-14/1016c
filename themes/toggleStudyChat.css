@@ -1,0 +1,60 @@
+/* Toggle study chat */
+
+@media (min-width: 1259.3px) {
+
+  body.lichessTools.lichessTools-theme_toggleStudyChat main.analyse:has(.mchat__tab input[type="checkbox"]:not(:checked)):not(.is-relay) .chat__members {
+    height: 8em;
+    bottom: 0;
+    position: fixed;
+    width: var(--left-side-width);
+  }
+
+  body.lichessTools.lichessTools-theme_toggleStudyChat main.analyse:has(.mchat__tab input[type="checkbox"]:not(:checked)):not(.is-relay) .mchat {
+    visibility: hidden;
+    max-height: 0px;
+    min-height: 0px;
+  }
+
+  body.lichessTools.lichessTools-theme_toggleStudyChat main.analyse:has(.mchat__tab input[type="checkbox"]:not(:checked)):not(.is-relay) .mchat + .vertical-resize {
+    display: none;
+  }
+
+  body.lichessTools.lichessTools-theme_toggleStudyChat main.analyse:has(.mchat__tab input[type="checkbox"]:not(:checked)):not(.is-relay) .mchat__tab .switch {
+    visibility: visible;
+    position: absolute;
+    bottom: -2em;
+    left: 1em;
+  }
+
+  body.lichessTools.lichessTools-theme_toggleStudyChat main.analyse:has(.mchat__tab input[type="checkbox"]:not(:checked)):not(.is-relay) .mchat__tab .switch label:before {
+    content: '\e041'; /* BubbleSpeech */
+  }
+
+  body.lichessTools.lichessTools-theme_toggleStudyChat main.analyse:has(.mchat__tab input[type="checkbox"]:not(:checked)):not(.is-relay) .study-list {
+    min-height: var(--board-size);
+  }
+
+  body.lichessTools.lichessTools-theme_toggleStudyChat main.analyse:has(.mchat__tab input[type="checkbox"]:not(:checked)):has(.study__chapters):not(.is-relay) aside.analyse__side {
+    position: absolute;
+    width: var(--left-side-width);
+  }
+
+}
+
+/** Prettier **/
+
+@media (min-width: 1259.3px) {
+
+  body.lichessTools.lichessTools-prettier.lichessTools-theme_toggleStudyChat main.analyse:has(.mchat__tab input[type="checkbox"]:not(:checked)):not(.is-relay) .mchat__tab .switch {
+    position: absolute !important;
+  }
+
+  body.lichessTools.lichessTools-prettier.lichessTools-theme_toggleStudyChat main.analyse:has(.mchat__tab input[type="checkbox"]:not(:checked)):not(.is-relay) section.mchat {
+    backdrop-filter: none !important;
+  }
+
+  body.lichessTools.lichessTools-prettier.lichessTools-theme_toggleStudyChat main.analyse:has(.mchat__tab input[type="checkbox"]:not(:checked)):not(.is-relay) {
+    position: static !important;
+  }
+
+}

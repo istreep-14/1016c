@@ -1,0 +1,71 @@
+body.lichessTools div.chat__members .lichessTools-opening,
+body.lichessTools div.game__meta .lichessTools-opening {
+  display: flex;
+  height: 3em;
+  align-items: baseline;
+  overflow: hidden;
+}
+
+body.lichessTools div.chat__members .lichessTools-opening {
+  float: left;
+}
+
+body.lichessTools div.chat__members .lichessTools-opening:before,
+body.lichessTools div.game__meta .lichessTools-opening:before {
+  margin-right: 0.4em;
+  margin-inline: 0 0.4em;
+  content: '\2659'; /* WhiteChessPawn */
+  transform: scale(1.25);
+  transform-origin: center;
+  align-self: baseline;
+  color: #808080;
+}
+
+body.lichessTools a.mini-game .lichessTools-opening {
+  margin: 3px 0.5em 0.3em 0.7em;
+  display: block;
+  opacity: 0.7;
+  height: auto;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: small;
+}
+
+body.lichessTools div.analyse__wiki .lichessTools-opening {
+  font-size: 1.2em;
+  width: 100%;
+  display: block;
+  text-align: center;
+}
+
+body.lichessTools .copyables .lichessTools-opening {
+  display: block;
+}
+
+body.lichessTools section.explorer-box div.data div.title .lichessTools-opening {
+  cursor: default;
+}
+
+body.lichessTools section.explorer-box div.data div.title:has(.lichessTools-opening) {
+  text-wrap: balance;
+}
+
+body.lichessTools div.lobby__tv .lichessTools-opening {
+  max-width: 290px;
+}
+
+body.lichessTools .copyables .pgn:has(.is-error) {
+  margin-bottom: 2em;
+}
+
+@media (min-width: 1259.3px) {
+  main.analyse.is-relay:not(.has-relay-tour) .chat__members:has(.lichessTools-opening) {
+    display: block;
+  }
+}
+
+/* Prettier Lichess CSS */
+
+body.lichessTools.lichessTools-prettier section.explorer-box div.data div.title .lichessTools-opening {
+  color: var(--primaryColor);
+}

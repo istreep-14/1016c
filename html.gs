@@ -98,13 +98,19 @@ function extractPageInitData(html) {
 function parseGameData(gameId, data) {
   const game = data.game;
   const treeParts = data.treeParts || [];
+  const division = data.division || { middle: null, end: null };
   
   // Calculate moves and plys
   const totalPlys = game.turns || 0;
   const totalMoves = Math.ceil(totalPlys / 2);
   
   // Parse all moves with detailed info from treeParts
-  const movesData = parseMovesFromTreeParts(treeParts);
+  const movesData = parseMovesFromTreeParts(
+    treeParts,
+    division,
+    game.clock?.initial,
+    game.clock?.increment
+  );
   
   // Get opening progression
   const openingProgression = extractOpeningProgression(treeParts);
@@ -134,6 +140,24 @@ function parseGameData(gameId, data) {
     createdAt: game.createdAt ? new Date(game.createdAt) : null
   };
   
+  // Aggregate move stats by simple eval swing thresholds
+  const moveStats = {
+    white: { brilliant: 0, best: 0, good: 0, neutral: 0, inaccuracies: 0, mistakes: 0, blunders: 0 },
+    black: { brilliant: 0, best: 0, good: 0, neutral: 0, inaccuracies: 0, mistakes: 0, blunders: 0 }
+  };
+  for (const mv of movesData) {
+    const bucket = mv.color === 'white' ? moveStats.white : moveStats.black;
+    switch (mv.classification) {
+      case 'brilliant': bucket.brilliant++; break;
+      case 'best': bucket.best++; break;
+      case 'good': bucket.good++; break;
+      case 'inaccuracy': bucket.inaccuracies++; break;
+      case 'mistake': bucket.mistakes++; break;
+      case 'blunder': bucket.blunders++; break;
+      default: bucket.neutral++; break;
+    }
+  }
+  
   return {
     gameId: gameId,
     url: `https://lichess.org/${gameId}`,
@@ -144,6 +168,8 @@ function parseGameData(gameId, data) {
     players: players,
     result: result,
     timing: timing,
+    division: division,
+    moveStats: moveStats,
     
     // Opening info
     finalOpening: finalOpening,
@@ -163,13 +189,20 @@ function parseGameData(gameId, data) {
 // PARSE MOVES FROM TREEPARTS
 // ============================================================================
 
-function parseMovesFromTreeParts(treeParts) {
+function parseMovesFromTreeParts(treeParts, division, clockInitialSeconds, clockIncrementSeconds) {
   if (!treeParts || treeParts.length === 0) {
     return [];
   }
   
   const moves = [];
   let currentOpening = null;
+  
+  const initialCentis = typeof clockInitialSeconds === 'number' ? clockInitialSeconds * 100 : null;
+  const incrementCentis = typeof clockIncrementSeconds === 'number' ? clockIncrementSeconds * 100 : 0;
+  const clockTracker = {
+    white: initialCentis,
+    black: initialCentis
+  };
   
   for (let i = 0; i < treeParts.length; i++) {
     const part = treeParts[i];
@@ -194,6 +227,10 @@ function parseMovesFromTreeParts(treeParts) {
     
     // Parse evaluation
     const evaluation = parseEvaluation(part.eval);
+    const prevPart = i > 0 ? treeParts[i - 1] : null;
+    const prevEvaluation = prevPart ? parseEvaluation(prevPart.eval) : null;
+    const evalBefore = formatEvaluationDisplay(prevEvaluation);
+    const evalAfter = formatEvaluationDisplay(evaluation);
     
     // Create move object
     const moveData = {
@@ -216,6 +253,8 @@ function parseMovesFromTreeParts(treeParts) {
       
       // Evaluation
       evaluation: evaluation,
+      evalBefore: evalBefore,
+      evalAfter: evalAfter,
       
       // Opening at this ply
       opening: currentOpening,
@@ -223,10 +262,63 @@ function parseMovesFromTreeParts(treeParts) {
       // Clock time (centiseconds)
       clock: part.clock || null,
       clockSeconds: part.clock ? part.clock / 100 : null,
+      moveTimeSeconds: null,
+      
+      // Extra annotations
+      isCheck: !!(part.check || (part.san && (part.san.indexOf('+') !== -1 || part.san.indexOf('#') !== -1))),
+      bestMove: (part.eval && part.eval.best) ? part.eval.best : null,
+      phase: 'opening',
+      glyph: '',
+      classification: 'neutral',
       
       // Move ID
       id: part.id || null
     };
+    
+    // Phase assignment
+    if (division) {
+      if (division.end && ply >= division.end) {
+        moveData.phase = 'endgame';
+      } else if (division.middle && ply >= division.middle) {
+        moveData.phase = 'middlegame';
+      } else {
+        moveData.phase = 'opening';
+      }
+    }
+    
+    // Compute move time if we have clock data
+    if (typeof part.clock === 'number' && clockTracker[color] !== null) {
+      const previousClock = clockTracker[color];
+      const currentClock = part.clock;
+      const spentCentis = previousClock - currentClock + incrementCentis;
+      if (spentCentis >= 0) {
+        moveData.moveTimeSeconds = Math.round(spentCentis / 100);
+      }
+      clockTracker[color] = currentClock;
+    }
+    
+    // Classify by eval swing (centipawns)
+    if (prevEvaluation && evaluation && prevEvaluation.type === 'centipawns' && evaluation.type === 'centipawns') {
+      const prevCp = prevEvaluation.value;
+      const currCp = evaluation.value;
+      const effectiveChange = color === 'white' ? (currCp - prevCp) : (prevCp - currCp);
+      if (effectiveChange < -300) {
+        moveData.classification = 'blunder';
+        moveData.glyph = '??';
+      } else if (effectiveChange < -150) {
+        moveData.classification = 'mistake';
+        moveData.glyph = '?';
+      } else if (effectiveChange < -50) {
+        moveData.classification = 'inaccuracy';
+        moveData.glyph = '?!';
+      } else if (effectiveChange > 100) {
+        moveData.classification = 'brilliant';
+        moveData.glyph = '!!';
+      } else {
+        moveData.classification = 'neutral';
+        moveData.glyph = '';
+      }
+    }
     
     moves.push(moveData);
   }
@@ -303,6 +395,23 @@ function parseEvaluation(evalData) {
     value: null,
     displayValue: null
   };
+}
+
+// ==========================================================================
+// EVALUATION STRING FORMATTER (before/after display)
+// ==========================================================================
+
+function formatEvaluationDisplay(evaluation) {
+  if (!evaluation || evaluation.type === null) return null;
+  if (evaluation.type === 'mate') {
+    const sign = evaluation.value > 0 ? '+' : '-';
+    return `${sign}M${Math.abs(evaluation.value)}`;
+  }
+  if (evaluation.type === 'centipawns') {
+    const pawns = (evaluation.value / 100).toFixed(2);
+    return evaluation.value >= 0 ? `+${pawns}` : `${pawns}`;
+  }
+  return null;
 }
 
 // ============================================================================
@@ -425,6 +534,8 @@ function writeGameToSheet(gameId) {
   sheet.getRange(row, 10).setValue(gameData.totalMoves);
   sheet.getRange(row, 11).setValue(gameData.totalPlys);
   sheet.getRange(row, 12).setValue(gameData.timing.timeControl);
+  sheet.getRange(row, 13).setValue(gameData.division?.middle || '');
+  sheet.getRange(row, 14).setValue(gameData.division?.end || '');
   
   Logger.log(`✅ Data written to row ${row}`);
 }
@@ -445,8 +556,8 @@ function writeMovesToSheet(gameId) {
     
     const headers = [
       'Game ID', 'Ply', 'Move #', 'Color', 'SAN', 'UCI',
-      'Eval Type', 'Eval Value', 'Opening Name', 'ECO',
-      'Clock (sec)', 'FEN', 'Board', 'Active Color', 'Castling', 'En Passant'
+      'Eval Type', 'Eval Value', 'Eval Before', 'Eval After', 'Classification', 'Glyph', 'Best Move', 'Phase', 'Move Time (s)', 'Is Check', 'Comment',
+      'Opening Name', 'ECO', 'Clock (sec)', 'FEN', 'Board', 'Active Color', 'Castling', 'En Passant'
     ];
     sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
     sheet.getRange(1, 1, 1, headers.length).setFontWeight('bold');
@@ -466,14 +577,23 @@ function writeMovesToSheet(gameId) {
     sheet.getRange(row, 6).setValue(move.uci);
     sheet.getRange(row, 7).setValue(move.evaluation?.type || '');
     sheet.getRange(row, 8).setValue(move.evaluation?.displayValue || '');
-    sheet.getRange(row, 9).setValue(move.opening?.name || '');
-    sheet.getRange(row, 10).setValue(move.opening?.eco || '');
-    sheet.getRange(row, 11).setValue(move.clockSeconds || '');
-    sheet.getRange(row, 12).setValue(move.fen);
-    sheet.getRange(row, 13).setValue(move.board);
-    sheet.getRange(row, 14).setValue(move.activeColor);
-    sheet.getRange(row, 15).setValue(move.castling || '');
-    sheet.getRange(row, 16).setValue(move.enPassant || '');
+    sheet.getRange(row, 9).setValue(move.evalBefore || '');
+    sheet.getRange(row, 10).setValue(move.evalAfter || '');
+    sheet.getRange(row, 11).setValue(move.classification || '');
+    sheet.getRange(row, 12).setValue(move.glyph || '');
+    sheet.getRange(row, 13).setValue(move.bestMove || '');
+    sheet.getRange(row, 14).setValue(move.phase || '');
+    sheet.getRange(row, 15).setValue(typeof move.moveTimeSeconds === 'number' ? move.moveTimeSeconds : '');
+    sheet.getRange(row, 16).setValue(move.isCheck ? '✓' : '');
+    sheet.getRange(row, 17).setValue(move.comment || '');
+    sheet.getRange(row, 18).setValue(move.opening?.name || '');
+    sheet.getRange(row, 19).setValue(move.opening?.eco || '');
+    sheet.getRange(row, 20).setValue(move.clockSeconds || '');
+    sheet.getRange(row, 21).setValue(move.fen);
+    sheet.getRange(row, 22).setValue(move.board);
+    sheet.getRange(row, 23).setValue(move.activeColor);
+    sheet.getRange(row, 24).setValue(move.castling || '');
+    sheet.getRange(row, 25).setValue(move.enPassant || '');
   });
   
   Logger.log(`✅ ${gameData.moves.length} moves written to sheet`);
@@ -489,7 +609,7 @@ function createGameSheet() {
   
   const headers = [
     'Game ID', 'White', 'W Rating', 'Black', 'B Rating', 'Winner',
-    'Opening', 'ECO', 'Speed', 'Moves', 'Plys', 'Time Control'
+    'Opening', 'ECO', 'Speed', 'Moves', 'Plys', 'Time Control', 'Division Middle', 'Division End'
   ];
   
   sheet.getRange(1, 1, 1, headers.length).setValues([headers]);

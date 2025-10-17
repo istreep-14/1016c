@@ -1,0 +1,15 @@
+body.lichessTools div.box__top:has(a.lichessTools-downloadAllStudies) {
+  position: relative;
+}
+
+body.lichessTools a.lichessTools-downloadAllStudies {
+  position: absolute;
+  right: 2em;
+  bottom: 1em;
+}
+
+/** Prettier **/
+
+body.lichessTools.lichessTools-prettier a.lichessTools-downloadAllStudies {
+  bottom: 0.5em;
+}

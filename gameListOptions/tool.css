@@ -1,0 +1,104 @@
+body.lichessTools div.lichessTools-gameListOptions {
+  display:flex;
+}
+
+body.lichessTools div.lichessTools-gameListOptions .lichessTools-gameListOptions-csv,
+body.lichessTools div.lichessTools-gameListOptions .lichessTools-gameListOptions-copy,
+body.lichessTools div.lichessTools-gameListOptions .lichessTools-gameListOptions-extraInfo,
+body.lichessTools div.lichessTools-gameListOptions .lichessTools-gameListOptions-delete {
+  border: none;
+  background: none;
+}
+
+body.lichessTools div.lichessTools-gameListOptions button {
+  order: 1;
+  margin-left: auto;
+}
+
+body.lichessTools div.lichessTools-gameListOptions button + button {
+  margin-left: 0.5em;
+}
+
+body.lichessTools div.lichessTools-gameListOptions .lichessTools-gameListOptions-delete {
+   color: var(--c-bad);
+}
+
+body.lichessTools div.lichessTools-gameListOptions button:hover {
+  background:#80808040;
+}
+
+body.lichessTools div.lichessTools-gameListOptions button:active {
+  background:#80808080;
+}
+
+.metadata.lichessTools-extraInfo span {
+  margin-left: 0.5em;
+  font-style: italic;
+  position: relative;
+  z-index: 3;
+}
+
+body.lichessTools .lichessTools-gameListOptions-hideAborted article:has(.mini-board[data-state^="rnbqkbnr/pppppppp"],.mini-board[data-state*="PPPPPPPP/RNBQKBNR"]) {
+  display:none;
+}
+
+body.lichessTools .lichessTools-gameListOptions-titledOpponents article:not(.lichessTools-hasTitledOpponent) {
+  display:none;
+}
+
+body.lichessTools .lichessTools-gameListOptions-color article.game-row {
+  background-color: var(--playersColor);
+}
+
+body.lichessTools #chkAborted,
+body.lichessTools #chkAnalysis,
+body.lichessTools #chkNoAnalysis,
+body.lichessTools #chkAnalysisLink,
+body.lichessTools #chkTitledOpponents,
+body.lichessTools #chkColor {
+  vertical-align: bottom;
+  margin-left: 0.5em;
+}
+
+body.lichessTools label[for="chkAborted"],
+body.lichessTools label[for="chkAnalysis"],
+body.lichessTools label[for="chkNoAnalysis"],
+body.lichessTools label[for="chkAnalysisLink"],
+body.lichessTools label[for="chkTitledOpponents"],
+body.lichessTools label[for="chkColor"] {
+  margin-left: 1em;
+}
+
+body.lichessTools .search__result:has(.search__rows) #chkAborted,
+body.lichessTools .search__result:has(.search__rows) label[for="chkAborted"] {
+  display:none;
+}
+
+body.lichessTools article.lichessTools-gameListOptions-select input[type="checkbox"] {
+  margin-right: 1em;
+}
+
+body.lichessTools article.lichessTools-gameListOptions-select .game-row__overlay {
+  left: 3em;
+}
+
+body.lichessTools .lichessTools-gameListOptions-analysis article:not(:has(.metadata)) {
+  display: none;
+}
+
+body.lichessTools .lichessTools-gameListOptions-noAnalysis article:has(.metadata) {
+  display: none;
+}
+
+body.lichessTools .lichessTools-gameListOptions-analysisLink article:after {
+  font-size: 1.5em;
+  vertical-align: middle;
+  font-family: "lichess";
+  font-style: normal;
+  font-weight: normal;
+  text-transform: none;
+  speak: none;
+  content: "\E01F"; /* Microscope */
+  opacity: .9;
+  unicode-bidi: isolate;
+}

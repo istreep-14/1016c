@@ -1,0 +1,70 @@
+body.lichessTools.lichessTools-keyMode-pgn div.analyse__tools div.analyse__fork {
+  border: 1px solid #808080;
+}
+
+body.lichessTools.lichessTools-keyMode-ceval div.analyse__tools div.pv_box {
+  border: 1px solid #808080;
+}
+
+body.lichessTools.lichessTools-keyMode-explorer section.explorer-box table.moves tbody {
+  border: 1px solid #808080;
+}
+
+body.lichessTools.lichessTools-keyMode-general main.analyse div.cg-wrap:after {
+  content: 'F';
+  position: absolute;
+  right: -1em;
+  top: -1em;
+  border-radius: 50%;
+  border: 1px solid #808080;
+  width: 1.5em;
+  height: 1.5em;
+  text-align: center;
+  z-index: 150;
+}
+
+body.lichessTools cg-container.lichessTools-freezeBoard {
+  pointer-events: none;
+  z-index: 2;
+  filter: sepia(0.5);
+}
+
+body.lichessTools.lichessTools-keyMode-general div.lichessTools-chapterControls button[data-act="random"] {
+  position: relative;
+}
+
+body.lichessTools.lichessTools-keyMode-general div.lichessTools-chapterControls button[data-act="random"]:after {
+  content: 'R';
+  position: absolute;
+  right: 0em;
+  top: 0em;
+  border-radius: 50%;
+  border: 1px solid #808080;
+  width: 1.5em;
+  height: 1.5em;
+  text-align: center;
+}
+
+body.lichessTools.lichessTools-hideSiteHeader header {
+  visibility: hidden;
+}
+
+body.zen.lichessTools.lichessTools-keyMode-general #zenzone:after,
+body.lichessTools.lichessTools-keyMode-general .site-name:after {
+  content: 'H';
+  position: absolute;
+  right: -0.5rem;
+  top: 1rem;
+  border-radius: 50%;
+  border: 1px solid #808080;
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: 1rem;
+  text-align: center;
+  visibility: visible;
+  color: white;
+}
+
+body.zen.lichessTools.lichessTools-keyMode-general #zenzone:after {
+  right: -5rem;
+}

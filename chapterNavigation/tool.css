@@ -1,0 +1,93 @@
+body.lichessTools .lichessTools-chapterControls div[role="footer"] {
+  display: flex;
+  justify-content: space-around;
+  background: #f8f8f8;
+  height: 2.5em;
+  align-items: stretch;
+}
+
+body.lichessTools h3.lichessTools-chapterNavigation-perc {
+  display: flex;
+  justify-content: space-between;
+}
+
+body.lichessTools h3.lichessTools-chapterNavigation-perc span {
+  pointer-events: none;
+}
+
+
+body.lichessTools h3.lichessTools-chapterNavigation-perc .perc {
+  display: none;
+  opacity: 0.9;
+  padding-right: 2em;
+}
+
+body.lichessTools .lichessTools-chapterControls:has(div[role="footer"]:hover) .perc {
+  display: inline;
+}
+
+
+@media not print and (prefers-color-scheme: dark) {
+  html:not(.dark, .darkBoard, .light) body.lichessTools .lichessTools-chapterControls div[role="footer"] {
+    background: #2D2B29;
+  }
+}
+
+html.dark body.lichessTools .lichessTools-chapterControls div[role="footer"],
+html.darkBoard body.lichessTools .lichessTools-chapterControls div[role="footer"] {
+  background: #2D2B29;
+}
+
+html.transp body.lichessTools .lichessTools-chapterControls div[role="footer"] {
+  background: transparent;
+}
+
+
+body.lichessTools .lichessTools-chapterControls:not(:has(div.study__chapters, div.relay-games)) div[role="footer"] {
+  display: none;
+}
+
+body.lichessTools .lichessTools-chapterControls div[role="footer"] button {
+  flex-grow: 1;
+}
+
+body.lichessTools aside.relay-tour__side.lichessTools-chapterControls div.relay-games {
+  flex-grow: 1;
+}
+
+body.lichessTools .lichessTools-hideNextButton button.next {
+  display:none;
+}
+
+body.lichessTools .study__chapters button.lichessTools-collapsedChapter {
+  display:none;
+}
+
+body.lichessTools .study__chapters div.lichessTools-expander {
+  font-family: 'lichess';
+  align-self: center;
+  margin-right:0.25em;
+}
+
+body.lichessTools .study__chapters div.lichessTools-expander:after {
+  content:'\e02e';
+}
+
+body.lichessTools .study__chapters div.lichessTools-expander.collapsed:after {
+  content:'\e02d';
+}
+
+/* Prettier */
+body.lichessTools.lichessTools-prettier .lichessTools-chapterControls div[role="footer"] {
+  background: var(--backgroundColor);
+}
+
+body.lichessTools.lichessTools-prettier section.mchat {
+  margin-top: 2px !important;
+}
+
+/* Lichess Helper */
+
+body.lichessTools.lichessTools-lichessHelper .study__chapters div.lichessTools-expander {
+  font-family: 'lichess' !important;
+}

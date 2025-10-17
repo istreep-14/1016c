@@ -1,0 +1,102 @@
+body.lichessTools div.perf-stat.puzzle .chart-container {
+  max-width:100vw;
+}
+
+body.lichessTools div.perf-stat.puzzle section
+{
+  display: none;
+}
+
+body.lichessTools div.perf-stat.puzzle section.glicko
+{
+  display: block;
+}
+
+body.lichessTools section.lichessTools-profilePuzzleTab
+{
+  display: block;
+  margin-top: 2em;
+}
+
+body.lichessTools section.lichessTools-profilePuzzleTab .nr {
+  text-align: end;
+}
+
+body.lichessTools section.lichessTools-profilePuzzleTab th {
+  font-weight: bold;
+}
+
+body.lichessTools section.lichessTools-profilePuzzleTab td.good {
+  color: #00CC00;
+}
+
+body.lichessTools section.lichessTools-profilePuzzleTab td.bad {
+  color: #FF8080;
+}
+
+body.lichessTools section.lichessTools-profilePuzzleTab table {
+  max-width: 80%;
+  min-width: max-content;
+  border-spacing: 0.5em;
+  border-collapse: separate;
+}
+
+body.lichessTools section.lichessTools-profilePuzzleTab [title] {
+  border-bottom: none;
+  cursor: default;
+}
+
+body.lichessTools section.lichessTools-profilePuzzleTab table tbody tr:first-child th,
+body.lichessTools section.lichessTools-profilePuzzleTab table tbody tr:first-child td {
+  border-bottom: 1px solid var(--c-border);
+}
+
+
+body.lichessTools section.lichessTools-profilePuzzleTab th.puzzleCount,
+body.lichessTools section.lichessTools-profilePuzzleTab th.performance,
+body.lichessTools section.lichessTools-profilePuzzleTab th.replay {
+  cursor: pointer;
+  text-decoration: underline 1px dashed var(--c-link);
+  text-underline-offset: 3px;
+}
+
+
+body.lichessTools section.lichessTools-profilePuzzleTab td.perc {
+  background: linear-gradient(to left, #00800080 var(--win), #20802040 calc(var(--win) + var(--rep)) , transparent 0);
+}
+
+
+body.lichessTools div.perf-stat.puzzle .box__top__actions,
+body.lichessTools div.perf-stat.puzzle span.progress {
+  display: none;
+}
+
+body.lichessTools section.lichessTools-profilePuzzleTab a > img {
+  width: 2em;
+  vertical-align: middle;
+  margin-right: 0.5em;
+}
+
+body.lichessTools .puzzle-dashboard__global section.lichessTools-profilePuzzleTab > div {
+  justify-items: stretch;
+}
+
+@media (min-width:600px) {
+
+  body.lichessTools .puzzle-dashboard__global section.lichessTools-profilePuzzleTab table {
+    margin-left: 10%;
+  }
+
+}
+
+body.lichessTools label.lichessTools-profilePuzzleTab.header {
+  margin-top:1em;
+  text-shadow: 2px 0 0 blue;
+}
+
+body.lichessTools label.lichessTools-profilePuzzleTab {
+  display: block;
+  font-size: larger;
+  font-weight: bold;
+  line-height: 2em;
+}

@@ -1,0 +1,17 @@
+body.lichessTools textarea.lichessTools-imagePasting+.ddloader {
+  float: right;
+  height: 1em;
+}
+
+body.lichessTools textarea.lichessTools-imagePasting {
+  cursor: wait;
+}
+
+body.lichessTools t.lichessTools-bigEmoji {
+  font-size: 2.5em;
+}
+
+body.lichessTools img.lichessTools-imagePasting-image {
+  max-width:95vw;
+  max-height:95vh;
+}
