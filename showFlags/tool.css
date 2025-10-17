@@ -1,0 +1,97 @@
+body.lichessTools img.flag {
+  max-height: 1.25em;
+  align-self: center;
+  /*justify-self: end;/* conflict with LiTags extension */
+  vertical-align: baseline;
+  margin-left: 5px;
+  margin-right: 5px; /* auto */
+}
+
+body.lichessTools .fide-federation img.flag,
+body.lichessTools .upt__info img.flag {
+  max-height: none;
+}
+
+body.lichessTools .fide-player__federation img.flag,
+body.lichessTools .fide-federations img.flag {
+  margin-right: 1ch;
+}
+
+body.lichessTools div.player img.flag {
+  max-height: 1.5em;
+  position: relative;
+  margin-left: -24px;
+  left: 29px;
+  top: 0.5em;
+}
+
+/* for list of tournament players */
+body.lichessTools td.player {
+  display: inline-flex;
+}
+
+/* for blog */
+body.lichessTools span.ublog-post-card__content img.flag {
+  right: 0px;
+  position: absolute;
+  z-index: 10;
+  top: 1.5em;
+}
+
+body.lichessTools .ublog-post__meta img.flag {
+  margin-left: -0.5em;
+}
+
+body.lichessTools .ublog-post__markup img.flag {
+  display: inline-block;
+  max-height: 1.25em;
+}
+
+/* for berserk mode overlapping the flag */
+body.lichessTools .game__meta .user-link+img.flag+i[data-icon] {
+  margin-left: 2.5em;
+}
+
+body.lichessTools span.mini-game__user img.flag {
+  font-size: x-small;
+}
+
+/*
+@keyframes lichessTools-wave {
+  0% {
+    transform: rotate3d(0, 1, 0, 0deg) skew(0deg,0deg);
+  }
+  25% {
+    transform: rotate3d(0, 1, 0, 30deg) skew(-1deg,2deg);
+  }
+  50% {
+    transform: rotate3d(0, 1, 0, -5deg) skew(0deg,1deg);
+  }
+  75% {
+    transform: rotate3d(0, 1, 0, -30deg) skew(1deg,-1deg);
+  }
+  100% {
+    transform: rotate3d(0, 1, 0, 0deg) skew(0deg,0deg);
+  }
+}
+
+body.lichessTools .lichessTools-flag+img.flag {
+  transform-origin: left;
+  animation: lichessTools-wave 10s linear infinite;
+}*/
+
+@media (max-width: 799.29px) and (orientation: portrait) {
+  body.lichessTools .ruser {
+    -width: fit-content;
+  }
+}
+
+@media (max-width: 499.29px) {
+  body.lichessTools .msg-app__convo__head:has(img.flag) {
+    max-width: 100vw;
+  }
+
+  body.lichessTools .msg-app__convo__head:has(img.flag) .msg-app__convo__action.button {
+    padding-left: 0;
+  }
+}

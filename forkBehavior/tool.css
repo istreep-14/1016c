@@ -1,0 +1,107 @@
+body.lichessTools .analyse__tools.lichessTools-forkBehavior-hybrid .analyse__fork {
+  border: 1px dashed red;
+  outline: 1px dashed red;
+}
+
+@media (max-width: 799.29px) and (orientation: portrait) {
+
+  body.lichessTools .analyse__tools.lichessTools-forkBehavior-hybrid .analyse__fork {
+    order: -1;
+    display: flex;
+  }
+
+}
+
+body.lichessTools dialog.lichessTools-forkBehavior-chessbase {
+  overflow: visible;
+  filter: contrast(0.7);
+  opacity: 0.9;
+  margin-top: 0;
+}
+
+body.lichessTools dialog.lichessTools-forkBehavior-chessbase .lichessTools-infoIcon {
+  position: absolute;
+  left: -0.25em;
+  top: -0.25em;
+}
+
+body.lichessTools dialog.lichessTools-forkBehavior-chessbase select {
+  min-width: 20em;
+}
+
+body.lichessTools dialog.lichessTools-forkBehavior-chessbase option {
+  padding: 0.5em 0;
+}
+
+body.lichessTools dialog.lichessTools-forkBehavior-chessbase optgroup option {
+  padding-left: 1em;
+}
+
+body.lichessTools dialog.lichessTools-forkBehavior-chessbase optgroup {
+  font-weight: bold;
+  padding-left: 1em;
+}
+
+body.lichessTools dialog.lichessTools-forkBehavior-chessbase span.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.5em;
+}
+
+body.lichessTools dialog.lichessTools-forkBehavior-chessbase span.dialog-actions button {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.5em;
+}
+
+body.lichessTools dialog.lichessTools-forkBehavior-chessbase ul {
+  min-width: 20em;
+  list-style: none;
+  text-align: left;
+  font-weight: bold;
+}
+
+body.lichessTools dialog.lichessTools-forkBehavior-chessbase .dialog-content>ul {
+  border: 1px solid var(--c-border);
+}
+
+body.lichessTools dialog.lichessTools-forkBehavior-chessbase li {
+  width: 100%;
+  text-align: left;
+  padding: 0.5em 0;
+}
+
+body.lichessTools dialog.lichessTools-forkBehavior-chessbase li.selected {
+  backdrop-filter: contrast(0.1);
+}
+
+body.lichessTools dialog.lichessTools-forkBehavior-chessbase ul ul li {
+  padding-left: 1em;
+}
+
+
+body.lichessTools dialog.lichessTools-forkBehavior-chessbase div.dialog-content {
+  padding: 0.5em;
+  min-width: unset;
+}
+
+body.lichessTools dialog.lichessTools-forkBehavior-chessbase button.close-button {
+  scale: 0.7;
+  transform: translate(18px, -18px);
+  width: 32px;
+  height: 32px;
+  font-size: 16px;
+  border-radius: 50%;
+  border: none;
+}
+
+body.lichessTools .analyse__tools.lichessTools-forkBehavior-hidden .analyse__fork {
+  display:none;
+}
+
+/* Prettier Lichess */
+
+
+body.lichessTools.lichessTools-prettier dialog.lichessTools-forkBehavior-chessbase select {
+  background: initial !important;
+}

@@ -1,0 +1,75 @@
+body.lichessTools main.lobby.lichessTools-lobbyPlay {
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: fit-content(0);
+  grid-template-areas: "app     app     app     table"
+}
+
+body.lichessTools main.lobby.lichessTools-lobbyPlay .lobby__side,
+body.lichessTools main.lobby.lichessTools-lobbyPlay .lobby__timeline,
+body.lichessTools main.lobby.lichessTools-lobbyPlay .lobby__tv,
+body.lichessTools main.lobby.lichessTools-lobbyPlay .lobby__blog,
+body.lichessTools main.lobby.lichessTools-lobbyPlay .lobby__puzzle,
+body.lichessTools main.lobby.lichessTools-lobbyPlay .lobby__support,
+body.lichessTools main.lobby.lichessTools-lobbyPlay .lobby__feed,
+body.lichessTools main.lobby.lichessTools-lobbyPlay .lobby__tournaments-simuls,
+body.lichessTools main.lobby.lichessTools-lobbyPlay .lobby__leaderboard,
+body.lichessTools main.lobby.lichessTools-lobbyPlay .lobby__winners,
+body.lichessTools main.lobby.lichessTools-lobbyPlay .lobby__about {
+  display: none;
+}
+
+body.lichessTools main.lobby .lobby__side .lichessTools-hideElement,
+body.lichessTools main.lobby .lobby__streams.lichessTools-hideElement,
+body.lichessTools main.lobby .lobby__spotlights.lichessTools-hideElement,
+body.lichessTools main.lobby .lobby__timeline.lichessTools-hideElement,
+body.lichessTools main.lobby .lobby__app.lichessTools-hideElement,
+body.lichessTools main.lobby .lobby__app div.lichessTools-hideElement,
+body.lichessTools main.lobby .lobby__table.lichessTools-hideElement:not(:has(dialog)),
+body.lichessTools main.lobby .lobby__tv.lichessTools-hideElement,
+body.lichessTools main.lobby .lobby__blog.lichessTools-hideElement,
+body.lichessTools main.lobby .lobby__puzzle.lichessTools-hideElement,
+body.lichessTools main.lobby .lobby__support.lichessTools-hideElement,
+body.lichessTools main.lobby .lobby__feed.lichessTools-hideElement,
+body.lichessTools main.lobby .lobby__tournaments-simuls.lichessTools-hideElement,
+body.lichessTools main.lobby .lobby__leaderboard.lichessTools-hideElement,
+body.lichessTools main.lobby .lobby__winners.lichessTools-hideElement,
+body.lichessTools main.lobby .lobby__about.lichessTools-hideElement {
+  display: none;
+}
+
+
+body.lichessTools main.lobby .lobby__side {
+  min-height: 300px;
+}
+
+@media (min-width: 499.3px) {
+  body.lichessTools main.lobby .lobby__side {
+    min-height: 400px
+  }
+}
+
+@media (min-width: 799.3px) {
+  body.lichessTools main.lobby .lobby__side {
+    height: 600px;
+    max-height: calc(100vh - calc(var(---site-header-height) + var(---site-header-margin) + var(---sticky-gap)) - var(---block-gap))
+  }
+
+  body.lichessTools main.lobby .lobby__side .daily-feed__updates {
+    margin-bottom:4em;
+  }
+}
+
+body.lichessTools .lichessTools-extraCounters {
+  display:contents;
+}
+
+/* Prettier Lichess CSS */
+
+body.lichessTools.lichessTools-prettier main.lobby.lichessTools-lobbyPlay .lobby__support {
+  display: none !important;
+}
+
+body.lichessTools main.lobby .lobby__table.lichessTools-hideElement:not(:has(dialog)),
+body.lichessTools.lichessTools-prettier main.lobby .lobby__support.lichessTools-hideElement {
+  display: none !important;
+}

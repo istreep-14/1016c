@@ -1,0 +1,311 @@
+/* CSS in preferences should not be under body.lichessTools, as the class can be removed when the extension is disabled */
+
+a + a.lichessTools-preferences:before {
+  padding-left: 0.5em;
+  left: -0.25em;
+  top: -0.5em;
+}
+
+a.lichessTools-preferences:before {
+  font-size: 0.9em;
+  text-shadow: var(--c-clearer) 1px 0 7px;
+}
+
+div.lichessTools-preferences .lichessTools-prefCount {
+  font-size: 0.75em;
+  vertical-align: super;
+}
+
+div.lichessTools-preferences:has(.filteredOut) .lichessTools-prefCount {
+  display:none;
+}
+
+div.lichessTools-preferences section.filteredOut {
+  disply:none;
+}
+
+div.lichessTools-preferences form > div:has(input.categoryToggle:checked) section.filteredIn {
+  display:block;
+}
+
+div.lichessTools-preferences div.prefTools {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 0;
+}
+
+div.lichessTools-preferences button.expandAll {
+  background: none;
+  border: none;
+  font-size:1.25em;
+}
+
+div.lichessTools-preferences button.expandAll:before {
+  margin-right:0.5em;
+}
+
+div.lichessTools-preferences input.prefFilter {
+  max-width: 30em;
+  width: 100%;
+  border-radius: 1em;
+}
+
+div.lichessTools-preferences div.feedback {
+  justify-self: center;
+  font-size: 1.5em;
+  margin-bottom: 1em;
+}
+
+body:not(.mobile) div.lichessTools-preferences .shiny-text {
+  background: linear-gradient(
+    120deg,
+    var(--c-font) 0%,
+    var(--c-font) 45%,
+    cyan 50%,
+    var(--c-font) 55%,
+    var(--c-font) 100%
+  );
+  background-size: 200% 100%;
+  background-position: -100% 0;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+  animation: shine-text 3s ease-in-out infinite;
+}
+
+@keyframes shine-text {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+div.lichessTools-preferences form > div:not(.feedback,.prefTools) {
+  display: none;
+}
+
+body.lichessTools-advancedPreferences div.lichessTools-preferences form > div:not(.feedback,.prefTools):has(section:not(.filteredOut)),
+div.lichessTools-preferences form > div:not(.feedback,.prefTools):has(.lichessTools-normalPreference:not(.filteredOut)) {
+  display: block;
+}
+
+div.lichessTools-preferences section[data-pref] {
+  position: relative;
+}
+
+div.lichessTools-preferences section[data-pref] a.lichessTools-infoIcon {
+  vertical-align: bottom;
+  vertical-align: text-bottom;
+  margin-left: 0.5em;
+}
+
+div.lichessTools-preferences p.saved {
+  position: fixed;
+  bottom: 1rem;
+  width: auto;
+  left: 2rem;
+  z-index: 10;
+}
+
+div.lichessTools-preferences div.links {
+  margin-top: -1em;
+  margin-bottom: 1em;
+}
+
+div.lichessTools-preferences h1 {
+  width: fit-content;
+}
+
+div.lichessTools-preferences h1:hover~div.links a {
+  animation: lichessTools-fire 1.5s ease-in-out infinite alternate;
+}
+
+
+div.lichessTools-preferences div.links .blog {
+  float: right;
+}
+
+div.lichessTools-preferences form>div:not(.feedback) {
+  padding-top: 3em;
+}
+
+div.lichessTools-preferences h3 {
+  position: relative;
+  font-size: x-large;
+  width: 100%;
+  z-index: 1;
+}
+
+div.lichessTools-preferences h3>label {
+  display: inline-block;
+  width: 100%;
+  text-align: right;
+}
+
+div.lichessTools-preferences table.lichessTools-globalSwitch {
+  width: 100%;
+  margin: 0 0 2em 0;
+  font-size: 1.1em;
+  table-layout: fixed;
+}
+
+div.lichessTools-preferences table.lichessTools-globalSwitch td:first-child {
+  width: 50%;
+  text-align: left;
+}
+
+div.lichessTools-preferences table.lichessTools-globalSwitch td {
+  width: 15%;
+  padding: 1em;
+  text-align: center;
+}
+
+div.lichessTools-preferences input.categoryToggle {
+  display: none;
+}
+
+div.lichessTools-preferences form>div:has(input.categoryToggle)>h3 label {
+  cursor: zoom-out;
+}
+
+div.lichessTools-preferences form>div:has(input.categoryToggle:checked)>h3 label {
+  cursor: zoom-in;
+}
+
+div.lichessTools-preferences form>div:has(input.categoryToggle:checked)>h3 label:after {
+  content: '\E030'; /* DownTriangle */
+  font-family: "lichess";
+  margin-left: 0.25em;
+}
+
+div.lichessTools-preferences form>div:has(input.categoryToggle:checked) section {
+  display: none;
+}
+
+div.lichessTools-preferences form>div:has(input.categoryToggle:checked)>h3 {
+  width: 100%;
+}
+
+div.lichessTools-preferences form>div:has(input.categoryToggle:checked)>h3:after {
+  margin-left: 1em;
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to right, var(--c-accent), #80808000 100%);
+  position: absolute;
+  top: 0.75em;
+  left: 0;
+  z-index: -1;
+}
+
+body.mobile div.lichessTools-preferences form>div:has(input.categoryToggle:checked)>h3:after {
+  background: linear-gradient(to right, var(--c-accent), #80808000 66%);
+}
+
+@keyframes lichessTools-fire {
+  0% {
+    text-shadow: 0 .008em .127em #fefcc9, .055em -0.066em .2em #feec85, -0.111em -0.127em .272em #ffae34, .111em -0.272em .411em #ec760c, -0.111em -0.456em .416em #cd4606, 0 -0.533em .577em #973716, .055em -0.55em .533em #451b0e
+  }
+
+  100% {
+    text-shadow: 0 0 .111em #fefcc9, .055em -0.055em .166em #fefcc9, -0.111em -0.111em .222em #feec85, .122em -0.233em .333em #ffae34, -0.122em -0.322em .277em #ec760c, 0 -0.456em .444em #cd4606, .055em -0.5em .444em #973716
+  }
+}
+
+
+div.lichessTools-preferences .lichessTools-fire {
+  animation: lichessTools-fire 1.5s ease-in-out infinite alternate;
+}
+
+body.lichessTools-globalDisable .lichessTools-preferences div.account form>div {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+div.lichessTools-preferences span.lichessTools-author {
+  margin-left: 2em;
+  font-size: small;
+  font-style: italic;
+}
+
+div.lichessTools-preferences section.lichessTools-advancedPreference {
+  display: none;
+}
+
+body.lichessTools-advancedPreferences div.lichessTools-preferences section.lichessTools-advancedPreference {
+  display: block;
+}
+
+body.lichessTools-advancedPreferences div.lichessTools-preferences section.lichessTools-hiddenPreference {
+  filter: sepia(1);
+}
+
+body.lichessTools-advancedPreferences div.lichessTools-preferences section.lichessTools-hiddenPreference a.lichessTools-infoIcon {
+  display: none;
+}
+
+body.lichessTools-advancedPreferences div.lichessTools-preferences section.lichessTools-advancedPreference h2:after {
+  opacity: 0.3;
+}
+
+body.lichessTools-advancedPreferences div.lichessTools-preferences section.lichessTools-wipPreference {
+  filter: sepia(1);
+}
+
+body.lichessTools-advancedPreferences div.lichessTools-preferences section.lichessTools-wipPreference h2:before {
+  content: 'WIP';
+  float: left;
+  margin-right: 1em;
+}
+
+div.lichessTools-preferences .actionButtons {
+  margin-top: 1em;
+  display: flex;
+  gap: 1em;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+div.lichessTools-preferences .actionButtons span {
+  flex-grow: 1;
+  color: cornflowerblue;
+}
+
+div.lichessTools-preferences div.defaultValue {
+  border: 1px cornflowerblue groove;
+  border-radius: 25%;
+}
+
+div.lichessTools-preferences div.folder,
+div.lichessTools-preferences div.file {
+  display:flex;
+}
+
+div.lichessTools-preferences div.folder button,
+div.lichessTools-preferences div.file button {
+  width: unset;
+  border: 1px solid var(--c-border);
+  background: transparent;
+  align-items: center;
+  display: flex;
+}
+
+/* Prettier Lichess CSS */
+
+body.lichessTools-prettier div.lichessTools-preferences table.lichessTools-globalSwitch tr:nth-child(odd) td {
+  background-color: #434548 !important;
+}
+
+
+body.lichessTools-prettier.lichessTools-advancedPreferences div.lichessTools-preferences section.lichessTools-advancedPreference h2:after {
+  background: gray !important;
+  opacity: 1;
+}
+
+body.lichessTools-prettier div.lichessTools-preferences .actionButtons button {
+  text-transform: capitalize !important;
+}
